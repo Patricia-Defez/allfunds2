@@ -5,7 +5,7 @@ import React, { useState, useCallback } from 'react';
 
 const Form = () => {
 
-    const initialValues = { kind: "", quantity: 0.00, resul: 0.00 };
+    const initialValues = { kind: "", quantity: 0.00, result: 0.00 };
     const [values, setValues] = useState({ ...initialValues });
     const expenses = [];
 
@@ -15,7 +15,8 @@ const Form = () => {
     };
 
     const handleSubmit = (event) => {
-
+        expenses.push(values)
+        console.log(expenses)
     };
 
 
@@ -40,11 +41,11 @@ const Form = () => {
     const payment = () => {
         let result = 0
         if (values.kind === 'TRANSPORTATION') {
-            return result = paying(values.quantity, 100, 0.12, 0.08)          
+            return values.result = paying(values.quantity, 100, 0.12, 0.08)          
         } else if (values.kind === 'MEAL') {
-            return result = paying(values.quantity, 3, 10, 6)
+            return values.result = paying(values.quantity, 3, 10, 6)
         } else if (values.kind === 'PARKING') {
-            return result = paying(values.quantity, 20, 1, 0.5)
+            return values.result = paying(values.quantity, 20, 1, 0.5)
         } else {
             return 0;
         }
@@ -78,7 +79,7 @@ const Form = () => {
                                 className="col-sm-2"
                                 type="text"
                                 name="result"
-                                value={` ${payment()} $`}
+                                value={`${payment()} $`}
                                 onChange={handleChange}/>
                         </div>
 
@@ -86,7 +87,7 @@ const Form = () => {
                     {isNaN(values.quantity) && (
                         <p data-testid="message" className="text-danger">Por favor, introduzca un número válido</p>
                     )}
-                    <button type="submit" data-testid="transp-reset" className="btn btn-info  btn-sm " onClick={useCallback(() => setValues(initialValues), [initialValues])}>Reset</button>    
+                    <button type="submit" data-testid="values-submit" className="btn btn-info  btn-sm " onClick={handleSubmit}>Reset</button>    
 
 
 
