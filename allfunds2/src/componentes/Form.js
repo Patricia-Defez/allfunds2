@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState} from 'react';
 
 
 
@@ -7,7 +7,9 @@ const Form = () => {
 
     const initialValues = { kind: "", quantity: 0.00, result: 0.00 };
     const [values, setValues] = useState({ ...initialValues });
-    const expenses = [];
+    const initialExpenses = [];
+    const [expenses, setExpenses] = useState (initialExpenses)
+    // var expenses = [] 
 
     const handleChange = (event) => {
         event.persist();
@@ -15,8 +17,9 @@ const Form = () => {
     };
 
     const handleSubmit = (event) => {
-        expenses.push(values)
+        setExpenses(...expenses, values)
         console.log(expenses)
+        setValues(initialValues)
     };
 
 
@@ -32,14 +35,16 @@ const Form = () => {
         return toPay 
     };
 
+    function findTotal() {
+
+    }
 
 
 
-    // const toPayTotal = (toPayTransp * 1) + (toPayMeal * 1) + (toPayParking * 1)
+   
 
 
     const payment = () => {
-        let result = 0
         if (values.kind === 'TRANSPORTATION') {
             return values.result = paying(values.quantity, 100, 0.12, 0.08)          
         } else if (values.kind === 'MEAL') {
@@ -54,6 +59,35 @@ const Form = () => {
 
     return (
         <div className="box mx-auto p-5">
+
+            <table className="table">
+                <thead>
+                    <tr className="text-center align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Concept</th>
+                        <th scope="col">Units</th>
+                        <th scope="col">To pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {[...expenses].map((expense, index) => (
+                        <tr{...expenses} key={index} className="text-center align-middle" >
+                            <th scope="row">{index+1}</th>
+                            <td>{expense.kind}</td>
+                            <td>{expense.quantity}</td>                            
+                            <td>{expense.result}</td>
+                        </tr>
+                    ))}
+                    <tr className="text-center align-middle">
+                    <th scope="row">Total</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{findTotal()}</td>
+                    </tr>
+                    </tbody>
+            </table>
+
             <div className="container  p-5">
                 <h1 className="text-center">Gestion de Dietas</h1>
                 <div className="marco mx-auto m-5 p-5 ">
