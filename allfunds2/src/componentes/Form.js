@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useCallback} from 'react';
 
 
 
@@ -16,12 +16,10 @@ const Form = () => {
         setValues(values => ({ ...values, [event.target.name]: event.target.value }));
     };
 
-    const handleSubmit = (event) => {
-        setExpenses(...expenses, values)
+    const handleSubmit = useCallback(() => {
+       setExpenses([...expenses, values])
         console.log(expenses)
-        setValues(initialValues)
-    };
-
+    }, [ values]);
 
     function paying(n, limit, BFactor, SFactor) {
         let toPay = 0
@@ -40,10 +38,6 @@ const Form = () => {
     }
 
 
-
-   
-
-
     const payment = () => {
         if (values.kind === 'TRANSPORTATION') {
             return values.result = paying(values.quantity, 100, 0.12, 0.08)          
@@ -58,9 +52,11 @@ const Form = () => {
 
 
     return (
-        <div className="box mx-auto p-5">
+        <div className="box mx-auto">
 
-            <table className="table">
+            <div className="container  p-3">
+                <h1 className="text-center p-5">Gestion de Dietas</h1>
+                <table className="table">
                 <thead>
                     <tr className="text-center align-middle">
                         <th scope="col">#</th>
@@ -87,9 +83,6 @@ const Form = () => {
                     </tr>
                     </tbody>
             </table>
-
-            <div className="container  p-5">
-                <h1 className="text-center">Gestion de Dietas</h1>
                 <div className="marco mx-auto m-5 p-5 ">
                     <div className="row mb-3">
                         <div className="input-group  mb-2">
