@@ -9,17 +9,18 @@ const Form = () => {
     const [values, setValues] = useState({ ...initialValues });
     const initialExpenses = [];
     const [expenses, setExpenses] = useState (initialExpenses)
-    // var expenses = [] 
+    const [total, setTotal] = useState (0)
 
     const handleChange = (event) => {
         event.persist();
         setValues(values => ({ ...values, [event.target.name]: event.target.value }));
     };
 
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = () => {
        setExpenses([...expenses, values])
         console.log(expenses)
-    }, [ values]);
+        setTotal(total => total + (values.result * 1))
+    };
 
     function paying(n, limit, BFactor, SFactor) {
         let toPay = 0
@@ -33,9 +34,9 @@ const Form = () => {
         return toPay 
     };
 
-    function findTotal() {
-
-    }
+    // function findTotal() {
+    //     setTotal(total => total + values.result)
+    // }
 
 
     const payment = () => {
@@ -78,8 +79,7 @@ const Form = () => {
                     <th scope="row">Total</th>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td>{findTotal()}</td>
+                    <td>{`${total} $`}</td>
                     </tr>
                     </tbody>
             </table>
@@ -114,7 +114,7 @@ const Form = () => {
                     {isNaN(values.quantity) && (
                         <p data-testid="message" className="text-danger">Por favor, introduzca un número válido</p>
                     )}
-                    <button type="submit" data-testid="values-submit" className="btn btn-info  btn-sm " onClick={handleSubmit}>Reset</button>    
+                    <button type="submit" data-testid="values-submit" className="btn btn-info  btn-sm " onClick={handleSubmit}>Submit</button>    
 
 
 
