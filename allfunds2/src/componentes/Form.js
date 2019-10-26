@@ -1,5 +1,5 @@
-import React, { useState, useCallback} from 'react';
-
+import React, { useState} from 'react';
+import ReacToExcel from 'react-html-table-to-excel';
 
 
 
@@ -17,10 +17,12 @@ const Form = () => {
     };
 
     const handleSubmit = () => {
-       setExpenses([...expenses, values])
-        console.log(expenses)
-        setTotal(total => total + (values.result * 1))
+        setExpenses([...expenses, values])
+        setTotal(total => (total + (values.result * 1)))
     };
+
+
+    
 
     function paying(n, limit, BFactor, SFactor) {
         let toPay = 0
@@ -33,10 +35,6 @@ const Form = () => {
         }
         return toPay 
     };
-
-    // function findTotal() {
-    //     setTotal(total => total + values.result)
-    // }
 
 
     const payment = () => {
@@ -57,7 +55,7 @@ const Form = () => {
 
             <div className="container  p-3">
                 <h1 className="text-center p-5">Gestion de Dietas</h1>
-                <table className="table">
+                <table className="table" id="tblData">
                 <thead>
                     <tr className="text-center align-middle">
                         <th scope="col">#</th>
@@ -83,6 +81,14 @@ const Form = () => {
                     </tr>
                     </tbody>
             </table>
+            <ReacToExcel 
+                className="btn btn-info  btn-sm"
+                table="tblData"
+                filename="excelFile"
+                sheet="sheet 1"
+                buttonText="EXPORT"
+            />
+
                 <div className="marco mx-auto m-5 p-5 ">
                     <div className="row mb-3">
                         <div className="input-group  mb-2">
